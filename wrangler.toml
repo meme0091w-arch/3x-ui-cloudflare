@@ -1,0 +1,37 @@
+name = "3x-ui-cf"
+main = "worker/src/index.ts"
+compatibility_date = "2026-08-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare Workers Builds / Wrangler automatic provisioning is enabled by default.
+# Leave account-specific IDs out of this repository so the GitHub deployment can
+# provision and link fresh D1/KV resources to this Worker automatically.
+[[d1_databases]]
+binding = "DB"
+database_name = "3x-ui-cf-db"
+# database_id = "<paste the id printed by: wrangler d1 create 3x-ui-cf-db>"
+migrations_dir = "worker/migrations"
+
+# KV namespaces are provisioned automatically on first deployment.
+# Do not commit account-specific namespace IDs.
+[[kv_namespaces]]
+binding = "SESSIONS"
+# id = "<paste the id printed by: wrangler kv namespace create SESSIONS>"
+
+[[kv_namespaces]]
+binding = "CACHE"
+# id = "<paste the id printed by: wrangler kv namespace create CACHE>"
+
+[assets]
+directory = "frontend/dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Daily housekeeping: prunes logs past `retention_days`, drops leaked
+# connection_state rows and expired sessions, and flips lapsed accounts to
+# `expired`. Without it nothing in this panel ever deletes anything.
+[triggers]
+crons = ["17 3 * * *"]
+
+[observability]
+enabled = true

@@ -1,0 +1,16 @@
+{
+  "name": "3x-ui-cloudflare-native",
+  "private": true,
+  "scripts": {
+    "build": "npm install --prefix frontend && npm install --prefix worker && npm --prefix frontend run build",
+    "deploy": "npm run build && npx wrangler deploy",
+    "postdeploy": "npm run migrate",
+    "migrate": "npx wrangler d1 migrations apply DB --remote",
+    "migrate:local": "npx wrangler d1 migrations apply DB --local",
+    "dev": "npx wrangler dev",
+    "audit:structure": "node scripts/verify-structure.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.68.0"
+  }
+}
