@@ -9,18 +9,18 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "3x-ui-cf-db"
-# database_id = "<paste the id printed by: wrangler d1 create 3x-ui-cf-db>"
+ database_id = "e684201f-5f4b-4f11-b374-2ee2da8fa913"
 migrations_dir = "worker/migrations"
 
 # KV namespaces are provisioned automatically on first deployment.
 # Do not commit account-specific namespace IDs.
 [[kv_namespaces]]
 binding = "SESSIONS"
-# id = "<paste the id printed by: wrangler kv namespace create SESSIONS>"
+ id = "18105a75850540aca2ea58e784af22fd"
 
 [[kv_namespaces]]
 binding = "CACHE"
-# id = "<paste the id printed by: wrangler kv namespace create CACHE>"
+ id = "ad3a9bec08c5430d8d78833fda1e7eda"
 
 [assets]
 directory = "frontend/dist"
